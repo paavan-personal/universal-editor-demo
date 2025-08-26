@@ -2,7 +2,8 @@
   "mappings": [
     "/content/ue-paavan-eds-site/:/",
     "/content/ue-paavan-eds-site/configuration:/.helix/config.json",
-    "/content/ue-paavan-eds-site/metadata:/metadata.json"
+    "/content/ue-paavan-eds-site/metadata:/metadata.json",
+    "/content/ue-paavan-eds-site/questionare:/questionare.json"
   ],
   "includes": [
     "/content/ue-paavan-eds-site/"
