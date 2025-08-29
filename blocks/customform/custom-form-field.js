@@ -300,20 +300,39 @@ const createToggle = (fd) => {
 };
 
 const createCheckbox = (fd) => {
-  const field = document.createElement('input');
-  field.type = 'checkbox';
-  setCommonAttributes(field, fd);
+const options = fd.Options.split(','); // Split the comma-separated values
+  const fieldWrapper = createFieldWrapper(fd); // Create the field wrapper
+
+   const label = createLabel(fd);
+  fieldWrapper.append(label);
 
   const optionWrapper = document.createElement('fieldset');
   optionWrapper.classList.add('checkbox-option');
 
-  const fieldWrapper = createFieldWrapper(fd);
-  const label = createLabel(fd);
-  field.setAttribute('aria-labelledby', label.id);
+  options.forEach(option => {
+    const field = document.createElement('input');
+    field.type = 'checkbox';
+    field.value = option.trim(); // Set the value of the checkbox
+    setCommonAttributes(field, fd);
 
-  optionWrapper.append(field, label);
-  fieldWrapper.append(optionWrapper);
-  return { field, fieldWrapper };
+    const label = createLabelCheckbox(fd, option.trim()); // Create a label for each checkbox
+    field.setAttribute('aria-labelledby', label.id);
+    const fieldWrapperDiv = createFieldWrapper(fd);
+    fieldWrapperDiv.append(field, label);
+
+    optionWrapper.append(fieldWrapperDiv); // Append checkbox and label to the option wrapper
+  });
+
+  fieldWrapper.append(optionWrapper); // Append the option wrapper to the field wrapper
+  return {field: label, fieldWrapper}; // Return the field wrapper containing all checkboxes
+};
+
+// Helper function to create a label for each checkbox
+const createLabelCheckbox = (fd, optionValue) => {
+  const label = document.createElement('label');
+  label.textContent = optionValue; // Set the label text to the option value
+  label.id = `label-${optionValue}`; // Set a unique ID for the label
+  return label;
 };
 
 const createRadio = (fd) => {
